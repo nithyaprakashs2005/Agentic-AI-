@@ -1,0 +1,114 @@
+[
+  {
+    "id": "kb-order-status",
+    "title": "Checking your order status",
+    "category": "orders",
+    "source_url": "https://kb.example.com/orders/status",
+    "text": "You can check the status of any order from the Orders page in your account. Each order shows one of five states: Processing, Packed, Shipped, Out for delivery, or Delivered. Once an order ships we email a tracking number, which usually becomes active with the carrier within four hours. Standard delivery takes three to five business days; express delivery takes one to two business days. If tracking has not updated for more than 48 hours after shipment, the parcel may be delayed in transit and our support team can open a carrier investigation on your behalf."
+  },
+  {
+    "id": "kb-order-missing",
+    "title": "Order marked delivered but not received",
+    "category": "orders",
+    "source_url": "https://kb.example.com/orders/not-received",
+    "text": "If tracking shows an order as delivered but you have not received it, first check any alternative delivery locations such as a porch, mail room, or a neighbour who may have accepted the parcel. Carriers occasionally mark a parcel delivered up to 24 hours before the physical handover. If the parcel has still not appeared after 24 hours, we can file a lost parcel claim. Claims are resolved within five business days and result in either a replacement shipment at no cost or a full refund, whichever you prefer."
+  },
+  {
+    "id": "kb-return-window",
+    "title": "Return window and eligibility",
+    "category": "returns",
+    "source_url": "https://kb.example.com/returns/policy",
+    "text": "Most items can be returned within 30 days of delivery for a full refund. Items must be unused and in their original packaging with all accessories included. Opened software, gift cards, perishable goods, and personalised items are not eligible for return. Items marked Final Sale cannot be returned but are still covered by the manufacturer warranty. The 30 day window starts on the delivery date shown in tracking, not the order date."
+  },
+  {
+    "id": "kb-return-label",
+    "title": "Generating a prepaid return label",
+    "category": "returns",
+    "source_url": "https://kb.example.com/returns/label",
+    "text": "To return an item, open the Orders page, select the order, and choose Start a return. Pick the items and a return reason, and we email a prepaid shipping label immediately. Print the label, attach it to the original box, and drop the parcel at any carrier location. Return shipping is free when the reason is a damaged, defective, or incorrect item. For change of mind returns a flat handling fee of 6 dollars 99 is deducted from the refund. Refunds are issued to the original payment method within three to five business days of the return arriving at our warehouse."
+  },
+  {
+    "id": "kb-refund-timing",
+    "title": "When refunds appear on your statement",
+    "category": "billing",
+    "source_url": "https://kb.example.com/billing/refund-timing",
+    "text": "Once a refund is approved we release it to your payment provider the same business day. Card refunds typically appear within three to five business days, though some banks take up to ten. Refunds to a digital wallet are usually instant. Bank transfer refunds take five to seven business days. The refund always returns to the payment method originally charged; we cannot redirect a refund to a different card or account for fraud prevention reasons."
+  },
+  {
+    "id": "kb-duplicate-charge",
+    "title": "Duplicate or unexpected charges",
+    "category": "billing",
+    "source_url": "https://kb.example.com/billing/duplicate-charge",
+    "text": "A duplicate charge is most often a pending authorisation rather than a completed payment. Authorisations are temporary holds placed when an order is created and they clear automatically within three to five business days. To confirm, compare the two entries on your statement: a hold usually shows as Pending. If both charges have settled and posted, this is a genuine duplicate and we refund it in full within one business day of verification. Charges you do not recognise at all should be reported immediately so we can review the account for unauthorised access."
+  },
+  {
+    "id": "kb-subscription-change",
+    "title": "Changing or cancelling a subscription",
+    "category": "billing",
+    "source_url": "https://kb.example.com/billing/subscription",
+    "text": "You can upgrade, downgrade, or cancel a subscription at any time from Account then Subscription. Upgrades take effect immediately and we charge a prorated amount for the remainder of the current billing period. Downgrades take effect at the start of the next billing period so you keep the features you have already paid for. Cancelling stops all future charges and access continues until the end of the paid period. We do not charge cancellation fees. Annual plans cancelled within 14 days of purchase qualify for a full refund."
+  },
+  {
+    "id": "kb-invoice-copy",
+    "title": "Downloading invoices and receipts",
+    "category": "billing",
+    "source_url": "https://kb.example.com/billing/invoices",
+    "text": "Every payment generates a PDF invoice available under Account then Billing history. Invoices include your billing address, the itemised charges, any tax applied, and the last four digits of the payment method. To add a company name or VAT number to future invoices, update the Billing details section before the next renewal date. We can reissue a historical invoice with corrected company details on request, but tax identifiers cannot be changed retroactively once a tax period has closed."
+  },
+  {
+    "id": "kb-password-reset",
+    "title": "Resetting your password",
+    "category": "technical",
+    "source_url": "https://kb.example.com/account/password-reset",
+    "text": "To reset a password, choose Forgot password on the sign in screen and enter the email address on the account. The reset link arrives within a few minutes and stays valid for 60 minutes. If the email does not arrive, check the spam folder and confirm you used the address the account was registered with. Requesting a second link invalidates the first. Passwords must be at least 12 characters and cannot repeat any of your previous five passwords. After five failed sign in attempts the account locks for 15 minutes as a security measure."
+  },
+  {
+    "id": "kb-login-2fa",
+    "title": "Two factor authentication problems",
+    "category": "technical",
+    "source_url": "https://kb.example.com/account/2fa",
+    "text": "If your authenticator app codes are rejected, the most common cause is clock drift on the device. Enable automatic date and time in the device settings and try again. Each backup recovery code works only once. If you have lost both the authenticator device and the recovery codes, identity verification with a support agent is required before two factor authentication can be reset; this protects the account from takeover and takes up to one business day."
+  },
+  {
+    "id": "kb-app-crash",
+    "title": "App crashes or will not load",
+    "category": "technical",
+    "source_url": "https://kb.example.com/technical/app-crash",
+    "text": "If the app closes unexpectedly or shows a blank screen, first force quit and reopen it. Next confirm you are on the latest version from your app store, since crash fixes ship frequently. Clearing the app cache resolves most persistent loading failures and does not delete your account data. If the problem continues, note the exact error message and the approximate time it occurred so support can locate the corresponding server logs. Known outages are always posted on the status page."
+  },
+  {
+    "id": "kb-sync-slow",
+    "title": "Slow performance and sync delays",
+    "category": "technical",
+    "source_url": "https://kb.example.com/technical/performance",
+    "text": "Sync delays are usually caused by a weak network connection or a very large pending change queue. Switching from mobile data to a stable wireless network resolves most cases. A first sync after a long period offline can take several minutes because changes are reconciled in batches. If a single item has been stuck as Pending for more than an hour, signing out and back in forces a fresh reconciliation. Data is never lost during a delayed sync; changes stay queued locally until they upload."
+  },
+  {
+    "id": "kb-contact-hours",
+    "title": "Support hours and contact channels",
+    "category": "general",
+    "source_url": "https://kb.example.com/support/contact",
+    "text": "Support is available by chat and phone from 8am to 8pm local time Monday through Friday, and 9am to 5pm on Saturday. Email is monitored continuously with a first response target of four hours during business hours. Phone support offers a callback option when the wait exceeds five minutes. Enterprise customers have a dedicated priority queue and a named account manager reachable outside standard hours."
+  },
+  {
+    "id": "kb-account-deletion",
+    "title": "Deleting your account permanently",
+    "category": "general",
+    "source_url": "https://kb.example.com/account/deletion",
+    "text": "Account deletion is permanent and cannot be undone. Deleting an account removes your profile, saved payment methods, and order history, though we retain transaction records where tax law requires. Any active subscription must be cancelled first, and outstanding balances must be settled. Because deletion is irreversible, every request is confirmed with a human agent before it is processed. Requests are completed within 30 days and you receive written confirmation once the deletion finishes."
+  },
+  {
+    "id": "kb-data-privacy",
+    "title": "Your data and privacy rights",
+    "category": "general",
+    "source_url": "https://kb.example.com/legal/privacy",
+    "text": "You may request a copy of the personal data we hold about you at any time, and we deliver it as a machine readable export within 30 days. You can also request correction of inaccurate data or restriction of processing for marketing purposes. We never sell personal data. Payment card numbers are never stored on our systems; they are held by our payment processor and we retain only the last four digits and expiry date for identification."
+  },
+  {
+    "id": "kb-warranty-claim",
+    "title": "Filing a warranty claim",
+    "category": "returns",
+    "source_url": "https://kb.example.com/returns/warranty",
+    "text": "Products carry a 12 month manufacturer warranty covering defects in materials and workmanship, starting from the delivery date. The warranty does not cover accidental damage, liquid damage, or normal wear. To file a claim, provide the order number and a clear description or photograph of the fault. Approved claims are resolved by repair, replacement, or refund at our discretion, and we cover shipping in both directions. Warranty claims remain valid even after the 30 day return window has closed."
+  }
+]

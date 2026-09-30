@@ -1,0 +1,137 @@
+# Backing services. All images are free and open source.
+#
+# Nothing here is required to run the backend -- every service has an in-process
+# fallback and `GET /health` reports which mode each subsystem is in. Bring them
+# up individually as you need real persistence:
+#
+#   docker compose up qdrant -d
+#   docker compose up qdrant valkey postgres -d
+#   docker compose up -d                        # everything
+
+name: support-agent
+
+services:
+  # --- Vector search: hybrid dense + BM25, RRF fusion ---
+  qdrant:
+    image: qdrant/qdrant:v1.19.0  # must track qdrant-client's major.minor
+    container_name: support-qdrant
+    ports:
+      - "6333:6333"   # REST
+      - "6334:6334"   # gRPC (preferred: lower latency)
+    volumes:
+      - qdrant_data:/qdrant/storage
+    environment:
+      QDRANT__SERVICE__GRPC_PORT: 6334
+      QDRANT__LOG_LEVEL: INFO
+    healthcheck:
+      # The image has no curl/wget; use Qdrant's own readiness probe over TCP.
+      test: ["CMD", "/qdrant/qdrant", "--version"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # --- Session state, pub/sub, rate limiting ---
+  valkey:
+    image: valkey/valkey:8.1-alpine
+    container_name: support-valkey
+    ports:
+      - "6379:6379"
+    command: ["valkey-server", "--save", "60", "1", "--appendonly", "no"]
+    volumes:
+      - valkey_data:/data
+    healthcheck:
+      test: ["CMD", "valkey-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+
+  # --- Tickets, transcripts, LangGraph checkpoints ---
+  postgres:
+    image: postgres:17-alpine
+    container_name: support-postgres
+    environment:
+      POSTGRES_USER: support
+      POSTGRES_PASSWORD: support
+      POSTGRES_DB: support_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U support -d support_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # --- WebRTC SFU for the voice channel ---
+  livekit:
+    image: livekit/livekit-server:v1.8.4
+    container_name: support-livekit
+    command: ["--dev", "--bind", "0.0.0.0"]
+    ports:
+      - "7880:7880"       # WebSocket / HTTP
+      - "7881:7881"       # TURN over TCP
+      - "51000-51020:51000-51020/udp"  # RTC media (50000-50059 is Hyper-V reserved on Windows)
+    environment:
+      # --dev mode uses the well-known devkey/secret pair. Never use in production.
+      LIVEKIT_KEYS: "devkey: secret"
+      LIVEKIT_RTC_PORT_RANGE_START: "51000"
+      LIVEKIT_RTC_PORT_RANGE_END: "51020"
+    restart: unless-stopped
+
+  # --- Local LLM fallback (optional; large image) ---
+  ollama:
+    image: ollama/ollama:0.5.13
+    container_name: support-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    profiles: ["llm"]   # opt in: docker compose --profile llm up ollama -d
+    restart: unless-stopped
+
+  # --- Observability: traces, spans, evals ---
+  # v2, not v3: v2 needs only PostgreSQL, while v3 additionally requires
+  # ClickHouse, Redis and S3/MinIO. The Python SDK is pinned to match.
+  langfuse:
+    image: langfuse/langfuse:2
+    container_name: support-langfuse
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "3001:3000"
+    environment:
+      # Its own database in the same instance, so migrations cannot collide
+      # with the application schema.
+      DATABASE_URL: postgresql://support:support@postgres:5432/langfuse
+      NEXTAUTH_URL: http://localhost:3001
+      NEXTAUTH_SECRET: dev-only-change-me-nextauth
+      SALT: dev-only-change-me-salt
+      # Quoted: unquoted 64 hex digits get coerced to a number by YAML, and
+      # Langfuse then rejects it as not 64 characters.
+      ENCRYPTION_KEY: "5a834d1688ed208ca20947c4f2854d8dc73957c8eb7ba83a83e8d08f5ecaa30b"
+      TELEMETRY_ENABLED: "false"
+      LANGFUSE_ENABLE_EXPERIMENTAL_FEATURES: "false"
+      # Headless provisioning: creates the org, project, user and API keys on
+      # first boot, so no click-through in the UI is needed to get credentials.
+      LANGFUSE_INIT_ORG_ID: support-org
+      LANGFUSE_INIT_ORG_NAME: Support
+      LANGFUSE_INIT_PROJECT_ID: support-agent
+      LANGFUSE_INIT_PROJECT_NAME: Support Agent
+      LANGFUSE_INIT_PROJECT_PUBLIC_KEY: pk-lf-3bbc60a553a2cd6b505602a83a917878
+      LANGFUSE_INIT_PROJECT_SECRET_KEY: sk-lf-5851b7bf6abde962b72430dbf81b20e2
+      LANGFUSE_INIT_USER_EMAIL: dev@support.localhost
+      LANGFUSE_INIT_USER_NAME: Dev
+      LANGFUSE_INIT_USER_PASSWORD: devpassword123
+    profiles: ["observability"]
+    restart: unless-stopped
+
+volumes:
+  qdrant_data:
+  valkey_data:
+  postgres_data:
+  ollama_data:

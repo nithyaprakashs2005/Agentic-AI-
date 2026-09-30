@@ -1,0 +1,256 @@
+{
+  "$comment": "Labelled evaluation set for the 92% FCR target. Labels describe what a CORRECT system should do, not what the current implementation does -- so the harness measures the gap rather than confirming itself. should_escalate is the ground truth for the escalation rule engine; expected_sources lists knowledge base article ids a grounded answer should draw on (prefix match, chunk suffixes ignored).",
+  "version": 1,
+  "cases": [
+    {
+      "id": "faq-refund-timing",
+      "message": "How long does a refund take to show up on my card?",
+      "expected_intent": "billing",
+      "should_escalate": false,
+      "expected_sources": ["kb-refund-timing"],
+      "notes": "Straight policy lookup, the archetypal Tier-1 deflection."
+    },
+    {
+      "id": "faq-return-window",
+      "message": "What is the return window for an unopened item?",
+      "expected_intent": "returns",
+      "should_escalate": false,
+      "expected_sources": ["kb-return-window"]
+    },
+    {
+      "id": "faq-return-label",
+      "message": "How do I get a prepaid return label for my order?",
+      "expected_intent": "returns",
+      "should_escalate": false,
+      "expected_sources": ["kb-return-label"]
+    },
+    {
+      "id": "faq-password-reset",
+      "message": "I need to reset my password but the email never arrives",
+      "expected_intent": "technical",
+      "should_escalate": false,
+      "expected_sources": ["kb-password-reset"]
+    },
+    {
+      "id": "faq-2fa-rejected",
+      "message": "My authenticator app codes keep getting rejected when I sign in",
+      "expected_intent": "technical",
+      "should_escalate": false,
+      "expected_sources": ["kb-login-2fa"]
+    },
+    {
+      "id": "faq-app-crash",
+      "message": "The app closes immediately every time I open it",
+      "expected_intent": "technical",
+      "should_escalate": false,
+      "expected_sources": ["kb-app-crash"]
+    },
+    {
+      "id": "faq-sync-slow",
+      "message": "My data has been stuck on Pending for over an hour",
+      "expected_intent": "technical",
+      "should_escalate": false,
+      "expected_sources": ["kb-sync-slow"]
+    },
+    {
+      "id": "faq-order-status",
+      "message": "Where is my order and when will it be delivered?",
+      "expected_intent": "orders",
+      "should_escalate": false,
+      "expected_sources": ["kb-order-status"]
+    },
+    {
+      "id": "faq-order-missing",
+      "message": "Tracking says delivered but I never received the package",
+      "expected_intent": "orders",
+      "should_escalate": false,
+      "expected_sources": ["kb-order-missing"]
+    },
+    {
+      "id": "faq-duplicate-charge",
+      "message": "I think I was charged twice for the same order",
+      "expected_intent": "billing",
+      "should_escalate": false,
+      "expected_sources": ["kb-duplicate-charge"]
+    },
+    {
+      "id": "faq-subscription-downgrade",
+      "message": "If I downgrade my subscription when does it take effect?",
+      "expected_intent": "billing",
+      "should_escalate": false,
+      "expected_sources": ["kb-subscription-change"]
+    },
+    {
+      "id": "faq-invoice-vat",
+      "message": "Can I add my company VAT number to future invoices?",
+      "expected_intent": "billing",
+      "should_escalate": false,
+      "expected_sources": ["kb-invoice-copy"]
+    },
+    {
+      "id": "faq-warranty",
+      "message": "The item stopped working after two months, is it under warranty?",
+      "expected_intent": "returns",
+      "should_escalate": false,
+      "expected_sources": ["kb-warranty-claim"]
+    },
+    {
+      "id": "faq-support-hours",
+      "message": "What hours is your phone support open on Saturday?",
+      "expected_intent": "general",
+      "should_escalate": false,
+      "expected_sources": ["kb-contact-hours"]
+    },
+    {
+      "id": "faq-data-export",
+      "message": "How do I request a copy of the personal data you hold about me?",
+      "expected_intent": "general",
+      "should_escalate": false,
+      "expected_sources": ["kb-data-privacy"]
+    },
+    {
+      "id": "faq-refund-method",
+      "message": "Can you refund me to a different card than the one I paid with?",
+      "expected_intent": "billing",
+      "should_escalate": false,
+      "expected_sources": ["kb-refund-timing"],
+      "notes": "Answer is no, for fraud prevention. Tests grounding on a negative."
+    },
+    {
+      "id": "esc-explicit-human",
+      "message": "I want to speak to a human please",
+      "expected_intent": "general",
+      "should_escalate": true,
+      "expected_escalation_reason": "explicit_keyword",
+      "notes": "An explicit request must never be absorbed by the agent."
+    },
+    {
+      "id": "esc-explicit-agent",
+      "message": "Can you put me through to an agent",
+      "expected_intent": "general",
+      "should_escalate": true,
+      "expected_escalation_reason": "explicit_keyword"
+    },
+    {
+      "id": "esc-manager",
+      "message": "Let me talk to your manager about this",
+      "expected_intent": "general",
+      "should_escalate": true,
+      "expected_escalation_reason": "explicit_keyword"
+    },
+    {
+      "id": "esc-cancel-account",
+      "message": "I want to cancel my account permanently",
+      "expected_intent": "general",
+      "should_escalate": true,
+      "expected_escalation_reason": "explicit_keyword",
+      "notes": "system specification HITL: account cancellation always needs a human."
+    },
+    {
+      "id": "esc-delete-account",
+      "message": "Please delete my account and all my data",
+      "expected_intent": "general",
+      "should_escalate": true,
+      "expected_escalation_reason": "explicit_keyword"
+    },
+    {
+      "id": "esc-legal-threat",
+      "message": "If this is not fixed today I am speaking to my lawyer",
+      "expected_intent": "general",
+      "should_escalate": true,
+      "expected_escalation_reason": "explicit_keyword"
+    },
+    {
+      "id": "esc-enterprise-angry",
+      "message": "This is absolutely unacceptable, we have been down for two days and nobody has responded",
+      "expected_intent": "technical",
+      "should_escalate": true,
+      "customer_id": "cust_abc123",
+      "customer_tier": "enterprise",
+      "expected_escalation_reason": "negative_sentiment_enterprise",
+      "notes": "Enterprise tier plus strong negative sentiment."
+    },
+    {
+      "id": "esc-billing-dispute",
+      "message": "I am disputing this unauthorized charge, this is the third time it has happened and I am furious",
+      "expected_intent": "billing",
+      "should_escalate": true,
+      "customer_id": "cust_abc123",
+      "customer_tier": "enterprise",
+      "notes": "Repeat failure plus dispute; should take the complex path."
+    },
+    {
+      "id": "esc-ambiguous",
+      "message": "it is broken again, same as before, you know the one",
+      "expected_intent": "technical",
+      "should_escalate": true,
+      "expected_escalation_reason": "low_intent_confidence",
+      "notes": "Genuinely ambiguous request: a human should take it."
+    },
+    {
+      "id": "esc-gibberish",
+      "message": "asdkjh qwe zzz ???",
+      "expected_intent": "general",
+      "should_escalate": true,
+      "expected_escalation_reason": "low_intent_confidence"
+    },
+    {
+      "id": "smalltalk-greeting",
+      "message": "hello",
+      "expected_intent": "general",
+      "should_escalate": false,
+      "notes": "A greeting is not an ambiguous request and must not fetch a human."
+    },
+    {
+      "id": "smalltalk-thanks",
+      "message": "thanks, that is all",
+      "expected_intent": "general",
+      "should_escalate": false
+    },
+    {
+      "id": "smalltalk-ok",
+      "message": "ok",
+      "expected_intent": "general",
+      "should_escalate": false
+    },
+    {
+      "id": "tricky-human-substring",
+      "message": "the human resources page will not load for me",
+      "expected_intent": "technical",
+      "should_escalate": false,
+      "notes": "Known failure: substring keyword matching escalates this. Kept in the set so the harness reports the cost rather than hiding it."
+    },
+    {
+      "id": "tricky-order-number",
+      "message": "What is the status of order ORD-84021?",
+      "expected_intent": "orders",
+      "should_escalate": false,
+      "expected_sources": ["kb-order-status"],
+      "notes": "Order reference must survive PII masking or the lookup breaks."
+    },
+    {
+      "id": "tricky-pii-card",
+      "message": "My card 4111 1111 1111 1111 was charged twice, can you check?",
+      "expected_intent": "billing",
+      "should_escalate": false,
+      "expected_sources": ["kb-duplicate-charge"],
+      "notes": "Card number must be masked before inference and never persisted."
+    },
+    {
+      "id": "tricky-multi-question",
+      "message": "How long is the return window, and does the refund go back to my card?",
+      "expected_intent": "returns",
+      "should_escalate": false,
+      "expected_sources": ["kb-return-window", "kb-refund-timing"],
+      "notes": "Two-part question; retrieval should surface both articles."
+    },
+    {
+      "id": "tricky-polite-frustration",
+      "message": "I am a bit disappointed that this has taken so long, but could you check my order status?",
+      "expected_intent": "orders",
+      "should_escalate": false,
+      "expected_sources": ["kb-order-status"],
+      "notes": "Mild negativity on a standard tier must not trigger escalation."
+    }
+  ]
+}

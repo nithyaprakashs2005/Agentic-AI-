@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens.
+ *
+ * Components previously hand-rolled `border-black/10 dark:border-white/10` and
+ * similar at every call site, so no two panels agreed on their edges. Naming
+ * the surfaces once means a component asks for "the border colour" rather than
+ * re-deriving it, and dark mode is defined in one place instead of doubled into
+ * every className.
+ */
+@theme {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, monospace;
+
+  /* Light surfaces */
+  --color-canvas: #f6f7f9;
+  --color-surface: #ffffff;
+  --color-surface-2: #f2f3f5;
+  --color-line: rgb(0 0 0 / 0.10);
+  --color-line-strong: rgb(0 0 0 / 0.22);
+  --color-ink: #0d1117;
+  --color-ink-2: #4b5563;
+  --color-ink-3: #6b7280;
+
+  /* Status. Semantic, not decorative: these carry meaning in the queue. */
+  --color-ok: #059669;
+  --color-ok-soft: #d1fae5;
+  --color-warn: #b45309;
+  --color-warn-soft: #fef3c7;
+  --color-danger: #b91c1c;
+  --color-danger-soft: #fee2e2;
+  --color-info: #0369a1;
+  --color-info-soft: #e0f2fe;
+  --color-accent: #4f46e5;
+}
+
+@media (prefers-color-scheme: dark) {
+  @theme {
+    --color-canvas: #0d1117;
+    --color-surface: #161b22;
+    --color-surface-2: #1c2129;
+    --color-line: rgb(255 255 255 / 0.10);
+    --color-line-strong: rgb(255 255 255 / 0.24);
+    --color-ink: #e6edf3;
+    --color-ink-2: #b0b8c1;
+    --color-ink-3: #8b949e;
+
+    --color-ok: #34d399;
+    --color-ok-soft: rgb(6 78 59 / 0.55);
+    --color-warn: #fbbf24;
+    --color-warn-soft: rgb(120 53 15 / 0.55);
+    --color-danger: #f87171;
+    --color-danger-soft: rgb(127 29 29 / 0.55);
+    --color-info: #38bdf8;
+    --color-info-soft: rgb(12 74 110 / 0.55);
+    --color-accent: #818cf8;
+  }
+}
+
+:root {
+  color-scheme: light dark;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-canvas);
+  color: var(--color-ink);
+}
+
+/* A visible focus ring everywhere, rather than per-component guesswork. */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Respect a user's reduced-motion preference for the typing indicator. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* The pulse used by the voice page's listening indicator. */
+@keyframes listening-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgb(79 70 229 / 0.45);
+  }
+  70% {
+    box-shadow: 0 0 0 14px rgb(79 70 229 / 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgb(79 70 229 / 0);
+  }
+}
+
+.listening {
+  animation: listening-ring 1.6s ease-out infinite;
+}
